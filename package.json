@@ -1,0 +1,42 @@
+{
+  "name": "rollup-plugin-express-svelte",
+  "version": "1.0.0",
+  "description": "A rollup plugin to bundle and wrap views with complete or partial hydration support from express-svelte package.",
+  "keywords": [
+    "rollup",
+    "rollup-plugin",
+    "express-svelte",
+    "hydration",
+    "partial-hydration"
+  ],
+  "main": "dist/rollup-plugin-express-svelte.cjs.js",
+  "module": "dist/rollup-plugin-express-svelte.es.js",
+  "scripts": {
+    "build": "rollup -c",
+    "prebuild": "del-cli dist",
+    "prepublishOnly": "npm run test",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxiruani/rollup-plugin-express-svelte.git"
+  },
+  "author": "Maximiliano Ruani",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maxiruani/rollup-plugin-express-svelte/issues"
+  },
+  "homepage": "https://github.com/maxiruani/rollup-plugin-express-svelte#readme",
+  "dependencies": {
+    "fast-glob": "^3.2.4",
+    "lodash": "^4.17.20"
+  },
+  "devDependencies": {
+    "@rollup/plugin-buble": "^0.21.3",
+    "del-cli": "^3.0.1",
+    "rollup": "^2.32.1"
+  },
+  "peerDependencies": {
+    "rollup": "^2.0.0"
+  }
+}
