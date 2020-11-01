@@ -20,14 +20,10 @@ class ViewFactory {
     }
 
     /**
-     * @param {String} input
-     * @param {"complete"|"partial"} [hydratable = "complete"]
+     * @param {String} rawFilename
      * @return {String}
      */
-    static async create(input, hydratable) {
-        const rawFilename = path.join(process.cwd(), input);
-        const tmpFilename = path.join(TMP_DIRNAME, input);
-
+    static async generateCompleteSource(rawFilename) {
         let str = `const views = [];`;
 
         str += `import { writable } from 'svelte/store';`;
@@ -52,9 +48,36 @@ const app = new ViewGlobals({
         componentProps
     }
 });`;
+        return str;
+    }
+
+    /**
+     * @return {String}
+     */
+    static async generatePartialSource() {
+
+    }
+
+    /**
+     * @param {String} input
+     * @param {"complete"|"partial"} [hydratable = "complete"]
+     * @return {String}
+     */
+    static async create(input, hydratable) {
+        const rawFilename = path.join(process.cwd(), input);
+        const tmpFilename = path.join(TMP_DIRNAME, input);
+
+        let source = null;
+
+        if (hydratable === this.Hydratable.PARTIAL) {
+            source = await this.generatePartialSource(rawFilename);
+        }
+        else {
+            source = await this.generateCompleteSource(rawFilename);
+        }
 
         await fs.ensureFile(tmpFilename);
-        await fs.writeFile(tmpFilename, str, { enconding: 'utf-8' });
+        await fs.writeFile(tmpFilename, source, { enconding: 'utf-8' });
         return tmpFilename;
     }
 }
