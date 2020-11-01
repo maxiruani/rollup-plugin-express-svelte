@@ -29,14 +29,17 @@
   "homepage": "https://github.com/maxiruani/rollup-plugin-express-svelte#readme",
   "dependencies": {
     "fast-glob": "^3.2.4",
+    "fs-extra": "^9.0.1",
     "lodash": "^4.17.20"
   },
   "devDependencies": {
     "@rollup/plugin-buble": "^0.21.3",
     "del-cli": "^3.0.1",
-    "rollup": "^2.32.1"
+    "rollup": "^2.32.1",
+    "svelte": "^3.24.1"
   },
   "peerDependencies": {
-    "rollup": "^2.0.0"
+    "rollup": "^2.0.0",
+    "svelte": "^3.24.1"
   }
 }

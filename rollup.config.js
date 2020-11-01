@@ -5,7 +5,7 @@ import pkg from './package.json';
 const external = Object.keys(pkg.dependencies).concat('path');
 
 export default {
-    input: 'src/index.js',
+    input: 'src/plugin.js',
     plugins: [buble()],
     external,
     output: [
