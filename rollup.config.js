@@ -1,12 +1,11 @@
-import buble from '@rollup/plugin-buble';
-
+import json from '@rollup/plugin-json';
 import pkg from './package.json';
 
 const external = Object.keys(pkg.dependencies).concat('path');
 
 export default {
     input: 'src/plugin.js',
-    plugins: [buble()],
+    plugins: [json()],
     external,
     output: [
         { file: pkg.main, format: 'cjs', exports: 'auto' },

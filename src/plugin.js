@@ -1,5 +1,5 @@
 import path from 'path';
-import isString from 'lodash/isString';
+import _ from 'lodash';
 import { name as pluginName } from '../package.json';
 import ViewFactory from "./view-factory";
 
@@ -27,7 +27,7 @@ export default function expressSvelte(options) {
             for (let i = 0; i < inputs.length; i++) {
                 const input = inputs[i];
 
-                if (isString(input) === true) {
+                if (_.isString(input) === true) {
                     const filename = path.resolve(path.join(process.cwd(), input));
                     const promise = ViewFactory.create(filename, hydratable);
                     promise.then(viewFilename => { result[input] = viewFilename });
