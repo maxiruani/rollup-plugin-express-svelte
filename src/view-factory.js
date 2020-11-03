@@ -65,7 +65,8 @@ const app = new ViewGlobals({
      * @return {String}
      */
     static async create(input, hydratable) {
-        const tmpFilename = path.join(TMP_DIRNAME, input);
+        const extname = path.extname(input) || null;
+        const tmpFilename = path.join(TMP_DIRNAME, extname ? input.replace(extname, '.js') : `${input}.js`);
 
         let source = null;
 
