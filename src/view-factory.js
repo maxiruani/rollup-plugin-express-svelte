@@ -24,13 +24,14 @@ class ViewFactory {
      * @return {String}
      */
     static async generateCompleteSource(rawFilename) {
-        let str = `const views = [];`;
+        const nl = '\n';
+        let str = ``;
 
-        str += `import { writable } from 'svelte/store';`;
-        str += `import ViewComponent from '${rawFilename}';`;
-        str += `import ViewGlobals from '${VIEW_GLOBALS_COMPONENT_FILENAME}';`;
-        str += `const [ target = document.body ] = document.getElementsByClassName('view-target');`;
-        str += `const [ anchor = null ] = document.getElementsByClassName('view-anchor');`;
+        str += `import { writable } from 'svelte/store';${nl}`;
+        str += `import ViewComponent from '${rawFilename}';${nl}`;
+        str += `import ViewGlobals from '${VIEW_GLOBALS_COMPONENT_FILENAME}';${nl}`;
+        str += `const [ target = document.body ] = document.getElementsByClassName('view-target');${nl}`;
+        str += `const [ anchor = null ] = document.getElementsByClassName('view-anchor');${nl}`;
 
         str += `
 const globalProps = window._GLOBAL_PROPS_ || {};
@@ -64,16 +65,15 @@ const app = new ViewGlobals({
      * @return {String}
      */
     static async create(input, hydratable) {
-        const rawFilename = path.join(process.cwd(), input);
         const tmpFilename = path.join(TMP_DIRNAME, input);
 
         let source = null;
 
         if (hydratable === this.Hydratable.PARTIAL) {
-            source = await this.generatePartialSource(rawFilename);
+            source = await this.generatePartialSource(input);
         }
         else {
-            source = await this.generateCompleteSource(rawFilename);
+            source = await this.generateCompleteSource(input);
         }
 
         await fs.ensureFile(tmpFilename);
