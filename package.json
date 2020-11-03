@@ -11,6 +11,7 @@
   ],
   "main": "dist/rollup-plugin-express-svelte.cjs.js",
   "module": "dist/rollup-plugin-express-svelte.es.js",
+  "browser": "src/components/ViewGlobals.svelte",
   "scripts": {
     "build": "rollup -c",
     "prebuild": "del-cli dist",
