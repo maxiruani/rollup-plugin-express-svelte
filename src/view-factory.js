@@ -29,7 +29,7 @@ class ViewFactory {
 
         str += `import { writable } from 'svelte/store';${nl}`;
         str += `import ViewComponent from '${rawFilename}';${nl}`;
-        str += `import ViewGlobals from '${VIEW_GLOBALS_COMPONENT_FILENAME}';${nl}`;
+        str += `import ViewGlobals from 'rollup-plugin-express-svelte';${nl}`;
         str += `const [ target = document.body ] = document.getElementsByClassName('view-target');${nl}`;
         str += `const [ anchor = null ] = document.getElementsByClassName('view-anchor');${nl}`;
 
