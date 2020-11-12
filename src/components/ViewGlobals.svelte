@@ -2,7 +2,7 @@
     import { setContext } from 'svelte';
 
     export let component;
-    export let componentProps = {};
+    export let props = {};
 
     export let globalAssets = {};
     export let globalProps = {};
@@ -17,4 +17,4 @@
     setContext('global.store', globalStore);
 </script>
 
-<svelte:component this={component} {...componentProps} />
+<svelte:component this={component} {...props} />

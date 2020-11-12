@@ -3,7 +3,7 @@
 A rollup plugin to bundle views with complete or partial hydration from [express-svelte](https://github.com/maxiruani/express-svelte) package.
 
 ## Install
-Install via npm or yarn.
+Install via npm.
 ```bash
 npm install rollup-plugin-express-svelte --save
 ```
