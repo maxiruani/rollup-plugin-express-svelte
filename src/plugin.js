@@ -36,7 +36,7 @@ export default function expressSvelte(options) {
                 else {
                     for (const [entryOutput, entryInput] of Object.entries(input)) {
                         const filename = path.resolve(path.join(process.cwd(), entryInput));
-                        const promise = ViewFactory.create(filename, hydratable );
+                        const promise = ViewFactory.create(filename, hydratable);
                         promise.then(viewFilename => { result[entryOutput] = viewFilename });
                         promises.push(promise);
                     }

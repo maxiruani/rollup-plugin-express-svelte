@@ -2,6 +2,8 @@
 
 A rollup plugin to bundle views with complete or partial hydration from [express-svelte](https://github.com/maxiruani/express-svelte) package.
 
+*Work in progress* - Partial hydration is not working yet.
+
 ## Install
 Install via npm.
 ```bash

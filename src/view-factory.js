@@ -115,7 +115,8 @@ for (let i = 0; i < startScripts.length; i++) {
      */
     static async getHydratedComponents(rawFilename) {
 
-        // Parse rawFilename and detect components wrapped with <Hydrate /> "express-svelte" component
+        // TODO: Parse rawFilename and detect components wrapped with <Hydrate /> "express-svelte" component
+        throw Error('NOT_SUPPORTED');
 
         return [];
     }
