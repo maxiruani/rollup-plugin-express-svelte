@@ -137,13 +137,13 @@ for (let i = 0; i < startScripts.length; i++) {
 
     /**
      * @param {String} input
+     * @param {String} output
      * @param {"complete"|"partial"} [hydratableMode = "complete"]
      * @return {Promise.<String>}
      */
-    static async create(input, hydratableMode) {
-        const extname = path__default['default'].extname(input) || null;
+    static async create(input, output, hydratableMode) {
         const tmpDirname = process.cwd() + '/.rollup-plugin-express-svelte';
-        const tmpFilename = path__default['default'].join(tmpDirname, extname ? input.replace(extname, `.js`) : `${input}.js`);
+        const tmpFilename = path__default['default'].join(tmpDirname, `${output}.js`);
         const inputRelative = path__default['default'].relative(path__default['default'].dirname(tmpFilename), path__default['default'].dirname(input)) + '/' + path__default['default'].basename(input);
 
         let source = null;
