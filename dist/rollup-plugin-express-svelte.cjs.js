@@ -143,7 +143,7 @@ for (let i = 0; i < startScripts.length; i++) {
     static async create(input, hydratableMode) {
         const extname = path__default['default'].extname(input) || null;
         const tmpDirname = process.cwd() + '/.rollup-plugin-express-svelte';
-        const tmpFilename = path__default['default'].join(tmpDirname, extname ? input.replace(extname, `.${hydratableMode}.js`) : `${input}.${hydratableMode}.js`);
+        const tmpFilename = path__default['default'].join(tmpDirname, extname ? input.replace(extname, `.js`) : `${input}.js`);
         const inputRelative = path__default['default'].relative(path__default['default'].dirname(tmpFilename), path__default['default'].dirname(input)) + '/' + path__default['default'].basename(input);
 
         let source = null;
