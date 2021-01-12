@@ -135,7 +135,7 @@ for (let i = 0; i < startScripts.length; i++) {
         const extname = path.extname(input) || null;
         const tmpDirname = process.cwd() + '/.rollup-plugin-express-svelte';
         const tmpFilename = path.join(tmpDirname, extname ? input.replace(extname, '.js') : `${input}.js`);
-        const inputRelative = path.relative(path.dirname(tmpFilename), path.dirname(input)) + path.basename(input);
+        const inputRelative = path.relative(path.dirname(tmpFilename), path.dirname(input)) + '/' + path.basename(input);
 
         let source = null;
 
