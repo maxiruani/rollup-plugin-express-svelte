@@ -12,9 +12,8 @@ class ViewFactory {
     /**
      * @return {Promise<void>}
      */
-    static async clear() {
+    static async ensure() {
         const tmpDirname = process.cwd() + '/.rollup-plugin-express-svelte';
-        await fs.remove(tmpDirname);
         await fs.ensureDir(tmpDirname);
     }
 
