@@ -15,9 +15,8 @@ class ViewFactory {
     /**
      * @return {Promise<void>}
      */
-    static async clear() {
+    static async ensure() {
         const tmpDirname = process.cwd() + '/.rollup-plugin-express-svelte';
-        await fs.remove(tmpDirname);
         await fs.ensureDir(tmpDirname);
     }
 
@@ -171,7 +170,7 @@ function expressSvelte(options) {
             const result = {};
             const promises = [];
 
-            await ViewFactory.clear();
+            await ViewFactory.ensure();
 
             for (let i = 0; i < inputs.length; i++) {
                 const input = inputs[i];
