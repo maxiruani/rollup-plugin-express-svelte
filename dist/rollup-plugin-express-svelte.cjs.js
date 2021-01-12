@@ -187,14 +187,14 @@ function expressSvelte(options) {
 
                 if (___default['default'].isString(input) === true) {
                     const filename = path__default['default'].resolve(path__default['default'].join(process.cwd(), input));
-                    const promise = ViewFactory.create(filename, hydratableMode);
+                    const promise = ViewFactory.create(filename, input, hydratableMode);
                     promise.then(viewFilename => { result[input] = viewFilename; });
                     promises.push(promise);
                 }
                 else {
                     for (const [entryOutput, entryInput] of Object.entries(input)) {
                         const filename = path__default['default'].resolve(path__default['default'].join(process.cwd(), entryInput));
-                        const promise = ViewFactory.create(filename, hydratableMode);
+                        const promise = ViewFactory.create(filename, entryOutput, hydratableMode);
                         promise.then(viewFilename => { result[entryOutput] = viewFilename; });
                         promises.push(promise);
                     }
