@@ -1,14 +1,13 @@
 import path from 'path';
 import _ from 'lodash';
 import fs from 'fs-extra';
+import svelte from 'svelte/compiler';
 
 var name = "rollup-plugin-express-svelte";
 
-const TMP_DIRNAME = __dirname + '/.tmp';
-
 class ViewFactory {
 
-    static Hydratable = {
+    static HydratableMode = {
         COMPLETE: 'complete',
         PARTIAL: 'partial'
     };
@@ -17,8 +16,9 @@ class ViewFactory {
      * @return {Promise<void>}
      */
     static async clear() {
-        await fs.remove(TMP_DIRNAME);
-        await fs.ensureDir(TMP_DIRNAME);
+        const tmpDirname = process.cwd() + '/.rollup-plugin-express-svelte';
+        await fs.remove(tmpDirname);
+        await fs.ensureDir(tmpDirname);
     }
 
     /**
@@ -117,23 +117,27 @@ for (let i = 0; i < startScripts.length; i++) {
      * @return {Promise.<String[]>}
      */
     static async getHydratedComponents(rawFilename) {
-
         // TODO: Parse rawFilename and detect components wrapped with <Hydrate /> "express-svelte" component
-        throw Error('NOT_SUPPORTED');
+
+        const opts = { generate: false };
+        const { ast, vars } = svelte.compile(rawFilename, opts);
+        
+        return [];
     }
 
     /**
      * @param {String} input
-     * @param {"complete"|"partial"} [hydratable = "complete"]
+     * @param {"complete"|"partial"} [hydratableMode = "complete"]
      * @return {Promise.<String>}
      */
-    static async create(input, hydratable) {
+    static async create(input, hydratableMode) {
         const extname = path.extname(input) || null;
-        const tmpFilename = path.join(TMP_DIRNAME, extname ? input.replace(extname, '.js') : `${input}.js`);
+        const tmpDirname = process.cwd() + '/.rollup-plugin-express-svelte';
+        const tmpFilename = path.join(tmpDirname, extname ? input.replace(extname, '.js') : `${input}.js`);
 
         let source = null;
 
-        if (hydratable === this.Hydratable.PARTIAL) {
+        if (hydratableMode === this.HydratableMode.PARTIAL) {
             source = await this.generatePartialSource(input);
         }
         else {
@@ -150,11 +154,11 @@ const DEFAULT_HYDRATABLE = 'complete';
 
 /**
  * @param {Object=}                options
- * @param {"complete"|"partial"}   options.hydratable    Hydration mode
+ * @param {"complete"|"partial"}   options.hydratableMode
  * @return {Plugin}
  */
 function expressSvelte(options) {
-    const hydratable = options.hydratable || DEFAULT_HYDRATABLE;
+    const hydratableMode = options.hydratableMode || DEFAULT_HYDRATABLE;
 
     return {
         pluginName: name,
@@ -172,14 +176,14 @@ function expressSvelte(options) {
 
                 if (_.isString(input) === true) {
                     const filename = path.resolve(path.join(process.cwd(), input));
-                    const promise = ViewFactory.create(filename, hydratable);
+                    const promise = ViewFactory.create(filename, hydratableMode);
                     promise.then(viewFilename => { result[input] = viewFilename; });
                     promises.push(promise);
                 }
                 else {
                     for (const [entryOutput, entryInput] of Object.entries(input)) {
                         const filename = path.resolve(path.join(process.cwd(), entryInput));
-                        const promise = ViewFactory.create(filename, hydratable);
+                        const promise = ViewFactory.create(filename, hydratableMode);
                         promise.then(viewFilename => { result[entryOutput] = viewFilename; });
                         promises.push(promise);
                     }

@@ -1,17 +1,17 @@
 import path from 'path';
 import _ from 'lodash';
 import { name as pluginName } from '../package.json';
-import ViewFactory from "./view-factory";
+import ViewFactory from './view-factory';
 
 const DEFAULT_HYDRATABLE = 'complete';
 
 /**
  * @param {Object=}                options
- * @param {"complete"|"partial"}   options.hydratable    Hydration mode
+ * @param {"complete"|"partial"}   options.hydratableMode
  * @return {Plugin}
  */
 export default function expressSvelte(options) {
-    const hydratable = options.hydratable || DEFAULT_HYDRATABLE;
+    const hydratableMode = options.hydratableMode || DEFAULT_HYDRATABLE;
 
     return {
         pluginName,
@@ -29,14 +29,14 @@ export default function expressSvelte(options) {
 
                 if (_.isString(input) === true) {
                     const filename = path.resolve(path.join(process.cwd(), input));
-                    const promise = ViewFactory.create(filename, hydratable);
+                    const promise = ViewFactory.create(filename, hydratableMode);
                     promise.then(viewFilename => { result[input] = viewFilename });
                     promises.push(promise);
                 }
                 else {
                     for (const [entryOutput, entryInput] of Object.entries(input)) {
                         const filename = path.resolve(path.join(process.cwd(), entryInput));
-                        const promise = ViewFactory.create(filename, hydratable);
+                        const promise = ViewFactory.create(filename, hydratableMode);
                         promise.then(viewFilename => { result[entryOutput] = viewFilename });
                         promises.push(promise);
                     }

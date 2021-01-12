@@ -12,9 +12,10 @@ npm install rollup-plugin-express-svelte --save
 
 ## Options
 
-### `hydratable`
+### `hydratableMode`
 
 Type: `String`<br>
+Values: `"complete"|"partial"`
 Default: `"complete"`
 
 Specifies the hydration approach to be made. `complete` will hydrate the whole view while `partial` will only hydrate components wrapped by `<Hydrate />` component.
