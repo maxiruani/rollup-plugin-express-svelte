@@ -31,15 +31,15 @@ class ViewFactory {
     }
 
     /**
-     * @param {String} rawFilename
+     * @param {String} rawRelativeFilename
      * @return {Promise.<String>}
      */
-    static async generateCompleteSource(rawFilename) {
+    static async generateCompleteSource(rawRelativeFilename) {
 
         return `
 import { writable } from 'svelte/store';
 import ViewGlobals from 'rollup-plugin-express-svelte';
-import ViewComponent from '${rawFilename}';
+import ViewComponent from '${rawRelativeFilename}';
 const [ target = document.body ] = document.getElementsByClassName('view-target');
 const [ anchor = null ] = document.getElementsByClassName('view-anchor');
 
@@ -61,10 +61,11 @@ new ViewGlobals({
     }
 
     /**
-     * @param {String} rawFilename
+     * @param {String} rawAbsoluteFilename
+     * @param {String} rawRelativeFilename
      * @return {Promise.<String>}
      */
-    static async generatePartialSource(rawFilename) {
+    static async generatePartialSource(rawAbsoluteFilename, rawRelativeFilename) {
 
         const componentFilenames = await this.getHydratedComponents(rawFilename);
 
@@ -143,14 +144,15 @@ for (let i = 0; i < startScripts.length; i++) {
         const extname = path__default['default'].extname(input) || null;
         const tmpDirname = process.cwd() + '/.rollup-plugin-express-svelte';
         const tmpFilename = path__default['default'].join(tmpDirname, extname ? input.replace(extname, '.js') : `${input}.js`);
+        const inputRelative = path__default['default'].relative(path__default['default'].dirname(tmpFilename), path__default['default'].dirname(input)) + path__default['default'].basename(input);
 
         let source = null;
 
         if (hydratableMode === this.HydratableMode.PARTIAL) {
-            source = await this.generatePartialSource(input);
+            source = await this.generatePartialSource(input, inputRelative);
         }
         else {
-            source = await this.generateCompleteSource(input);
+            source = await this.generateCompleteSource(inputRelative);
         }
 
         await fs__default['default'].ensureFile(tmpFilename);
